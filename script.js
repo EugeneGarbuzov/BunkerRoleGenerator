@@ -36,12 +36,22 @@ const additionals = [
     'Большая тяга к алкоголю',
 ];
 
+const noItemsLeft = 'Характеристик не осталось';
+
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 function generateFeature(elementId, values) {
-    document.getElementById(elementId).textContent = values[getRandomInt(0, values.length - 1)];
+    if (values.length) {
+        const index = getRandomInt(0, values.length - 1);
+        document.getElementById(elementId).textContent = values[index];
+        values.splice(index, 1);
+    } else {
+        const element = document.getElementById(elementId);
+        element.textContent = noItemsLeft;
+        element.classList.add('error');
+    }
 }
 
 function clearFeature(elementId) {
